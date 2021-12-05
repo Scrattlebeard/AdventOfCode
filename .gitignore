@@ -1,0 +1,5 @@
+build
+.idea
+.gradle
+src/aoc2020
+src/main/resources/session
