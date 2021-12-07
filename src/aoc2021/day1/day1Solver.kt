@@ -13,20 +13,21 @@ suspend fun main() {
 
         solver {
             println("Solving challenge 1...")
-            it.countIncreases(1).toString()
+            it.countIncreases().toString()
         }
 
         solver {
             println("Solving challenge 2...")
-            it.countIncreases(3).toString()
+            it
+                .windowed(3)
+                .map { it.sum() }
+                .countIncreases()
+                .toString()
         }
     }
 }
 
-fun List<Long>.countIncreases(windowSize: Int): Int {
-    return this.windowed(windowSize)
-        .map { nums -> nums.sum() }
+fun List<Long>.countIncreases(): Int =
+    this
         .windowed(2)
-        .map { sums -> sums[0] < sums[1] }
-        .count { it }
-}
+        .count { it[0] < it[1] }
