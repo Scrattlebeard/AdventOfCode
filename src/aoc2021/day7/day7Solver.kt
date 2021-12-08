@@ -1,10 +1,7 @@
 package aoc2021.day7
 
 import lib.*
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.roundToInt
-import kotlin.math.roundToLong
+import kotlin.math.*
 
 suspend fun main() {
     challenge<List<Int>> {
@@ -29,9 +26,8 @@ suspend fun main() {
 
         solver {
             println("Solving challenge 2...")
-            val depths = List(it.toSet().maxOf { it }){i -> i}
-            val costs = depths.map { d -> costOf(d, it) }
-            costs.minOf { it }.toString()
+            val avg = floor(it.average()).roundToInt()
+            it.sumOf { depth ->  abs(depth - avg).sumOfIntsUntil() }.toString()
         }
     }
 }
@@ -42,4 +38,10 @@ fun Int.sumOfIntsUntil(): Long {
 
 fun costOf(depth: Int, depths: List<Int>) : Long {
     return depths.sumOf {abs(it - depth).sumOfIntsUntil() }
+}
+
+fun solvePartTwo(input: List<Int>) {
+    val depths = List(input.toSet().maxOf { it }){i -> i}
+           val costs = depths.map { d -> costOf(d, input) }
+           costs.minOf { it }.toString()
 }
