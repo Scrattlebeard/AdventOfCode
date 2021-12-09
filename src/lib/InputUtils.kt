@@ -12,11 +12,11 @@ fun File.getStringsGroupedByEmptyLine(): List<List<String>> {
         .map { it.map { it.trim() } }
 }
 
-fun get2DArrayFromStringList(data: List<String>): Array<Array<Char>> {
-    val height = data.size
-    val width = data.first().length
+fun List<String>.get2DArray(): Array<Array<Char>> {
+    val height = this.size
+    val width = this.first().length
 
-    return Array(width) { i -> Array(height) { j -> data[j][i] } }
+    return Array(width) { i -> Array(height) { j -> this[j][i] } }
 }
 
 fun List<String>.readStringsAsDigits(): List<List<Int>> {
