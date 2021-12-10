@@ -35,9 +35,25 @@ suspend fun main() {
                     if (isLowPoint(i, j, it)) i to j else -1 to -1
                 }
             }
-                .fold(listOf<Pair<Int, Int>>()) { acc, l -> acc.plus(l.filter { it.first > -1 }) }
+                .fold(listOf<Pair<Int, Int>>()) { acc, l -> acc.plus(l) }
+                .associateWith { 0 }
+                .toMutableMap()
 
-            "Todo challenge 2"
+            it.mapIndexed { i, l -> l.mapIndexed { j, _ -> findLowPoint(i to j, it, lowPoints) } }
+                .forEach {
+                    it.forEach {
+                        lowPoints[it] = lowPoints[it]!! + 1
+                    }
+                }
+
+            var sortedPoints = lowPoints.entries.filter { it.key.first != -1 }
+                .sortedByDescending { it.value }
+                .subList(0, 3)
+
+            var res = sortedPoints.fold(1) { acc, n -> acc * n.value }
+                .toString()
+
+            res
         }
     }
 }
@@ -52,4 +68,25 @@ fun List<List<Int>>.tryGet(i: Int, j: Int): Int {
     return if (i < this.size && j < this.first().size && i > -1 && j > -1) {
         this[i][j]
     } else Int.MAX_VALUE
+}
+
+fun findLowPoint(point: Pair<Int, Int>, map: List<List<Int>>, lowPoints: Map<Pair<Int, Int>, Int>): Pair<Int, Int> {
+    val i = point.first
+    val j = point.second
+    if (map[i][j] == 9) {
+        return -1 to -1
+    }
+
+    if (lowPoints.keys.contains(point)) {
+        return point
+    }
+
+    val minN = listOf(
+        (i - 1 to j) to map.tryGet(i - 1, j),
+        (i + 1 to j) to map.tryGet(i + 1, j),
+        (i to j - 1) to map.tryGet(i, j - 1),
+        (i to j + 1) to map.tryGet(i, j + 1)
+    ).minByOrNull { p -> p.second }
+
+    return findLowPoint(minN!!.first, map, lowPoints)
 }
