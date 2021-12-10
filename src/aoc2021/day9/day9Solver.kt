@@ -30,6 +30,13 @@ suspend fun main() {
 
         solver {
             println("Solving challenge 2...")
+            val lowPoints = it.mapIndexed { i, l ->
+                l.mapIndexed { j, num ->
+                    if (isLowPoint(i, j, it)) i to j else -1 to -1
+                }
+            }
+                .fold(listOf<Pair<Int, Int>>()) { acc, l -> acc.plus(l.filter { it.first > -1 }) }
+
             "Todo challenge 2"
         }
     }
