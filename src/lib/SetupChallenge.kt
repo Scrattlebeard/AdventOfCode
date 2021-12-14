@@ -22,5 +22,8 @@ suspend fun main() {
     val solver = template
         .replace("<day>", "$day")
         .replace("<year>", "$year")
-    File(path + "day${day}Solver.kt").writeText(solver)
+    val output = File(path + "day${day}Solver.kt")
+    if (!output.exists()) {
+        output.writeText(solver)
+    }
 }

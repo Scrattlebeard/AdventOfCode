@@ -16,7 +16,7 @@ class Challenge<T> {
     private lateinit var parser: suspend (File) -> T
     private var solvers = mutableListOf<suspend (T) -> String>()
 
-    suspend fun solve() {
+    suspend fun solveChallenge() {
         if (inputs.size == 0) {
             inputs.add("input.txt")
         }
@@ -71,5 +71,5 @@ class Challenge<T> {
 @AocDsl
 suspend fun <T> challenge(block: Challenge<T>.() -> Unit) {
     val model = Challenge<T>()
-    model.apply(block).solve()
+    model.apply(block).solveChallenge()
 }
