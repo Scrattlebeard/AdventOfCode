@@ -14,7 +14,7 @@ suspend fun main() {
         parser {
             it.readLines()
                 .map { it.split("-") }
-                .map { Edge(it[0], it[1])}
+                .flatMap { listOf(Edge(it[0], it[1]), Edge(it[1], it[0]))}
                 .buildGraph()
         }
 
