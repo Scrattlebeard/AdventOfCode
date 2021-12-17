@@ -9,7 +9,6 @@ suspend fun main() {
         day(12)
 
         input("example.txt")
-        input("example4.txt")
         input("input.txt")
 
         parser {
@@ -21,12 +20,12 @@ suspend fun main() {
 
         solver {
             println("Solving challenge 1...")
-            it.countPathsFromNodeTo("start", "end", setOf("start"), listOf(), false).toString()
+            it.countPathsFromNodeTo("start", "end", setOf("start"), setOf(), false).toString()
         }
 
         solver {
             println("Solving challenge 2...")
-            it.countPathsFromNodeTo("start", "end", setOf("start"), listOf(), true).toString()
+            it.countPathsFromNodeTo("start", "end", setOf("start"), setOf(), true).toString()
         }
     }
 }
@@ -35,14 +34,14 @@ fun Graph<String>.countPathsFromNodeTo(
     node: String,
     dest: String,
     forbiddenNodes: Set<String>,
-    visitedNodes: List<String>,
+    visitedNodes: Set<String>,
     allowRepeat: Boolean = true
 ): Int {
     if (node == dest) {
         return 1
     }
 
-    var newForbiddenNodes = if (!allowRepeat) forbiddenNodes.plus(node) else forbiddenNodes
+    var newForbiddenNodes = if (!allowRepeat) forbiddenNodes union visitedNodes else forbiddenNodes
 
     var newAllowRepeat = allowRepeat
     if (allowRepeat && visitedNodes.contains(node)) {
