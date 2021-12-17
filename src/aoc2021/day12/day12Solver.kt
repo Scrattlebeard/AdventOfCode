@@ -9,24 +9,24 @@ suspend fun main() {
         day(12)
 
         input("example.txt")
-        input("example2.txt")
+        input("example4.txt")
         input("input.txt")
 
         parser {
             it.readLines()
                 .map { it.split("-") }
-                .map { Edge(it[0], it[1]) }
+                .map { Edge(it[0], it[1])}
                 .buildGraph()
         }
 
         solver {
             println("Solving challenge 1...")
-            it.countPathsFromNodeTo("start", "end", setOf("start"), setOf(), false).toString()
+            it.countPathsFromNodeTo("start", "end", setOf("start"), listOf(), false).toString()
         }
 
         solver {
             println("Solving challenge 2...")
-            it.countPathsFromNodeTo("start", "end", setOf("start"), setOf(), true).toString()
+            it.countPathsFromNodeTo("start", "end", setOf("start"), listOf(), true).toString()
         }
     }
 }
@@ -35,7 +35,7 @@ fun Graph<String>.countPathsFromNodeTo(
     node: String,
     dest: String,
     forbiddenNodes: Set<String>,
-    visitedNodes: Set<String>,
+    visitedNodes: List<String>,
     allowRepeat: Boolean = true
 ): Int {
     if (node == dest) {

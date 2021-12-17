@@ -46,10 +46,6 @@ fun mostCommonDigits(l: List<List<Int>>): List<Int> {
     }
 }
 
-fun List<Int>.toBinaryInt(): Int {
-    return this.map(Int::toString).fold("") { acc, ele -> acc + ele }.toInt(2)
-}
-
 fun List<List<Int>>.filterBy(i: Int, value: Int): List<List<Int>> {
     return this.filter { it[i] == value }
 }
