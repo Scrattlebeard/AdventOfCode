@@ -2,6 +2,7 @@ package aoc2021.day15
 
 import lib.*
 import lib.graph.*
+import java.util.*
 
 suspend fun main() {
     challenge<Pair<List<List<Int>>, Pair<Int, Int>>> {
@@ -40,26 +41,28 @@ suspend fun main() {
 
 fun List<List<Int>>.shortestPathFromTo(start: Pair<Int, Int>, dest: Pair<Int, Int>): Long {
 
-    val unvisitedDistances = mutableMapOf<Pair<Int, Int>, Long>()
-    unvisitedDistances[start] = 0
-    var currentPos: Pair<Int, Int>? = start
-    while (currentPos != null) {
+    val toVisit = PriorityQueue<Pair<Pair<Int, Int>, Long>> { a, b -> a.second.compareTo(b.second) }
+    val visitTracker = mutableMapOf(start to 0L)
+    var current: Pair<Pair<Int, Int>, Long>? = start to 0
+    while (current != null) {
+        val currentPos = current.first
         if (currentPos == dest) {
-            return unvisitedDistances[currentPos]!!
+            return current.second
         }
+        visitTracker[currentPos] = current.second
 
         this.getNeighbours(currentPos.first, currentPos.second)
-            .filter { unvisitedDistances.getOrDefault(it.first, Long.MAX_VALUE) > 0 }
-            .forEach {
-                unvisitedDistances[it.first] = minOf(
-                    unvisitedDistances[currentPos]!! + it.second,
-                    unvisitedDistances.getOrDefault(it.first, Long.MAX_VALUE)
-                )
+            .filter { visitTracker.getOrDefault(it.first, -1) == -1L }
+            .forEach { neighbour ->
+                val match = toVisit.firstOrNull { it.first == neighbour.first }
+                val newDist = visitTracker[currentPos]!! + neighbour.second
+                if (newDist < (match?.second ?: Long.MAX_VALUE)) {
+                    toVisit.remove(match)
+                    toVisit.add(neighbour.first to newDist)
+                }
             }
 
-        unvisitedDistances[currentPos] = -1
-        currentPos = unvisitedDistances.filter { it.value > 0 }.minByOrNull { it.value }?.key
+        current = toVisit.poll()
     }
-
     return Long.MAX_VALUE
 }
