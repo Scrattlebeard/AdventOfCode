@@ -31,7 +31,7 @@ suspend fun main() {
         solver {
             println("Solving challenge 2...")
             val lowPoints = it.mapIndexed { i, l ->
-                l.mapIndexed { j, num ->
+                l.mapIndexed { j, _ ->
                     if (isLowPoint(i, j, it)) i to j else -1 to -1
                 }
             }

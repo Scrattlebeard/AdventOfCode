@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.20"
+    kotlin("jvm") version "1.6.10"
 }
 
 group = "ddj.adventofcode"
@@ -12,8 +12,8 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-client-core:1.6.4")
-    implementation("io.ktor:ktor-client-cio:1.6.4")
+    implementation("io.ktor:ktor-client-core:1.6.7")
+    implementation("io.ktor:ktor-client-cio:1.6.7")
 }
 
 sourceSets {
@@ -27,10 +27,10 @@ sourceSets {
 
 kotlin {
     sourceSets.all {
-        languageSettings.useExperimentalAnnotation("kotlin.ExperimentalStdlibApi")
+        languageSettings.optIn("kotlin.ExperimentalStdlibApi")
     }
 }
 
 tasks.withType<KotlinCompile>() {
-    kotlinOptions.jvmTarget = "11"
+    kotlinOptions.jvmTarget = "17"
 }

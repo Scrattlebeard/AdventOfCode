@@ -43,8 +43,8 @@ fun String.getDigit(): Int {
 
 fun getOutput(input: Set<String>, output: List<String>): Int {
     val inputSets = input.map{it.toSet().sorted()}
-    var knownDigits = input.associate { it.getDigit() to it.toSet().sorted() }.toMutableMap()
-    val a = knownDigits[7]!! subtract knownDigits[1]!!
+    val knownDigits = input.associate { it.getDigit() to it.toSet().sorted() }.toMutableMap()
+    //val a = knownDigits[7]!! subtract knownDigits[1]!!
     val cCandidates = inputSets.filter { it.size == 6 }
         .map { knownDigits[1]!! subtract (it.toSet() intersect knownDigits[1]!!) }
         val c = cCandidates.first { it.isNotEmpty() }
