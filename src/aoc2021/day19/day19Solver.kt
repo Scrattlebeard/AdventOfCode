@@ -20,6 +20,7 @@ suspend fun main() {
             var truth = it.first().sortedBy { it.first }
 
             //Sort by each axis, try to match sliding size 12 window?
+            //Won't work, since the relative 0 differs. Need to look at pointwise relative distances.
             for(i in it.indices) {
                 for(j in i+1 until it.size) {
                     var iz = it[i].getAllOrientations()
