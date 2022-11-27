@@ -17,7 +17,7 @@ class InputDownloader {
         val client = HttpClient(CIO)
         val resp: HttpResponse = client.get("https://adventofcode.com/$year/day/$day$suffix") {cookie("session", session)}
         client.close()
-        return resp.readText()
+        return resp.bodyAsText()
     }
 
     suspend fun createInputFile(day: Int, year: Int) = createFile(day, year, "input.txt", downloadInput(day, year))

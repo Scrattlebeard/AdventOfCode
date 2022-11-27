@@ -1,0 +1,16 @@
+package aoc2021.day24
+
+class ALUTemplate {
+
+    var x = 0
+    var y = 0
+    var z = 0
+    var w = 0
+
+    fun run(input: List<Int>): Int {
+
+        //<program here>
+
+        return z
+    }
+}
