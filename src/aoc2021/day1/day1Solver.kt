@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<List<Long>> {
 
         day(1)
+        year(2021)
 
         parser {
             it.readLines().map(String::toLong)

@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<Array<Array<Char>>> {
 
         day(25)
+        year(2021)
 
         parser {
             it.readLines().get2DArray()

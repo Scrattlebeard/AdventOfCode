@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<List<List<Int>>> {
 
         day(3)
+        year(2021)
 
         input("example.txt")
         input("input.txt")

@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<List<String>> {
 
         day(<day>)
+        year(<year>)
 
         parser {
             it.readLines()

@@ -9,6 +9,7 @@ suspend fun main() {
     challenge<Pair<Pair<Int, Int>, Pair<Int, Int>>> {
 
         day(17)
+        year(2021)
 
         parser {
             val (xMin, xMax, yMin, yMax) = """target area: x=(-?\d+)..(-?\d+), y=(-?\d+)..(-?\d+)"""

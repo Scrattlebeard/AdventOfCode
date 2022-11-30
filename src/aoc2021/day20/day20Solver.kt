@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<Pair<String, Array<Array<Char>>>> {
 
         day(20)
+        year(2021)
 
         //input("example.txt")
 

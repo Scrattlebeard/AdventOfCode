@@ -8,6 +8,7 @@ suspend fun main() {
     challenge<List<Triple<String, Char, String>>> {
 
         day(24)
+        year(2021)
 
         //input("bin_example.txt")
 

@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<List<List<Triple<Int, Int, Int>>>> {
 
         day(19)
+        year(2021)
 
         parser {
             it.getStringsGroupedByEmptyLine()

@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<Packet> {
 
         day(16)
+        year(2021)
 
         input("example6.txt")
         input("input.txt")

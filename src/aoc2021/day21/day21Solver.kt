@@ -9,6 +9,7 @@ suspend fun main() {
     challenge<Pair<Int, Int>> {
 
         day(21)
+        year(2021)
 
         //input("example.txt")
 

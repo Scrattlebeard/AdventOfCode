@@ -7,6 +7,7 @@ suspend fun main() {
     challenge<Burrow> {
 
         day(23)
+        year(2021)
 
         parser {
             //Example:

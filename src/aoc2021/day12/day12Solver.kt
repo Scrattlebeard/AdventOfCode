@@ -7,6 +7,7 @@ suspend fun main() {
     challenge<Graph<String>> {
 
         day(12)
+        year(2021)
 
         input("example.txt")
         input("input.txt")

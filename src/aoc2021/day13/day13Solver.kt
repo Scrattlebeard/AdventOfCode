@@ -6,6 +6,7 @@ suspend fun main() {
     challenge<Pair<List<List<Boolean>>, List<Pair<String, Int>>>> {
 
         day(13)
+        year(2021)
 
         input("example.txt")
         input("input.txt")
