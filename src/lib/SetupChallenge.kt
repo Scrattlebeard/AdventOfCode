@@ -4,8 +4,8 @@ import java.io.File
 import java.util.*
 
 
-var day: Int? = null
-var year: Int? = 2022
+var day: Int? = 3
+var year: Int? = 2015
 
 suspend fun main() {
 
