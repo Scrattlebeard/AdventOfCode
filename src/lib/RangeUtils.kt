@@ -18,6 +18,11 @@ operator fun IntProgression.minus(other: IntProgression): List<IntProgression> {
     return listOf(this.first until other.first, other.last+1 ..this.last).filter { !it.isEmpty() }
 }
 
+fun String.toIntProgression(sep: String): IntProgression {
+    val parts = this.split(sep)
+    return parts[0].toInt()..parts[1].toInt()
+}
+
 fun IntProgression.startAt(n: Int): IntProgression {
     return maxOf(this.first, n)..this.last
 }

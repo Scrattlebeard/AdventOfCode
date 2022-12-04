@@ -4,6 +4,14 @@ infix fun String.intersect(other: String): Set<Char> {
     return this.toSet().intersect(other.toSet())
 }
 
+infix fun String.intersect(other: Set<Char>): Set<Char> {
+    return this.toSet().intersect(other)
+}
+
+infix fun Set<Char>.intersect(other: String): Set<Char> {
+    return this.intersect(other.toSet())
+}
+
 infix fun String.intersects(other: String): Boolean {
     return this.toSet().intersect(other.toSet()).isNotEmpty()
 }
