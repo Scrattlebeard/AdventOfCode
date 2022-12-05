@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+    - main
+      
+jobs:
+  push_to_unions_aoc:
+    name: Push changes to Unions AoC
+    runs-on: ubuntu-latest
+    steps:
+    - name: foo
+      run: |
+        mkdir tmp
+        cd tmp
+        git clone https://github.com/Scrattlebeard/AdventOfCode.git
+        cp ../* .
+        git add *
+        git commit -m 'Changes pushed from remote repo'
+        git push
+        
