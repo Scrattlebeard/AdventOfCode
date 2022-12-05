@@ -26,17 +26,18 @@ jobs:
         
         git status
         
-        cp -rf ../this/* ./
-        
+        cp -rf ../this/AdventOfCode/* ./AoC-2022-DDJ/
+                
         ls -a
-        git status
+                
+        cd AoC-2022-DDJ
         
-        cd AdventOfCode       
+        git status
         
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
         
-        git add *
+        git add src/lib/*
         git commit -m 'Changes pushed from remote repo'
         git push
         
