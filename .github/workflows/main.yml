@@ -14,6 +14,7 @@ jobs:
         cd ../tmp
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
         cp -rf ../AdventOfCode/ .
+        cd AdventOfCode
         git add *
         git commit -m 'Changes pushed from remote repo'
         git push
