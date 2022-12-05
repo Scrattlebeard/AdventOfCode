@@ -11,18 +11,16 @@ jobs:
     - name: foo
       run: |
         
-        ls -a
+        mkdir this
+        cd this
+        git clone https://github.com/Scrattlebeard/AdventOfCode.git 
         
-        mkdir ../tmp
-        cd ../tmp
+        mkdir ../that
+        cd ../that
         
-        ls -a
-        
-        git clone https://github.com/Scrattlebeard/AdventOfCode.git
-        cp -rf ../AdventOfCode/* ./AdventOfCode
-        cd AdventOfCode
-        
-        ls -a | echo
+        git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
+        cp -rf ../this/* .
+        cd AdventOfCode       
         
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
