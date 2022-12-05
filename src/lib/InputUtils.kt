@@ -6,10 +6,9 @@ val newline: String = System.lineSeparator()
 
 fun File.getStringsGroupedByEmptyLine(): List<List<String>> {
     return this.readText()
-        .trim()
+        .trimEnd()
         .split("$newline$newline")
         .map { it.split(newline) }
-        .map { it.map { it.trim() } }
 }
 
 fun List<String>.get2DArray(): Array<Array<Char>> {
