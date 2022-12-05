@@ -15,7 +15,7 @@ jobs:
         cd ../tmp
         
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
-        cp -rf ../AdventOfCode/ .
+        cp -rf ../AdventOfCode/* ./AdventOfCode
         cd AdventOfCode
         
         git config user.email "you@example.com"
