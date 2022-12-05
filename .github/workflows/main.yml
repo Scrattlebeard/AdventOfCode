@@ -11,11 +11,13 @@ jobs:
     - name: foo
       run: |
         
+        ls
         mkdir ../tmp
         cd ../tmp
         
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
-        cp -rf ../AdventOfCode/* ./AdventOfCode
+        ls
+        cp -rf ../* ./AdventOfCode
         cd AdventOfCode
         
         git config user.email "you@example.com"
