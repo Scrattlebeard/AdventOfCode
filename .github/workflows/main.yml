@@ -13,13 +13,24 @@ jobs:
         
         mkdir this
         cd this
-        git clone https://github.com/Scrattlebeard/AdventOfCode.git 
+        git clone https://github.com/Scrattlebeard/AdventOfCode.git
+        
+        ls -a
         
         mkdir ../that
         cd ../that
         
         git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
-        cp -rf ../this/AdventOfCode/* ./AdventOfCode
+        
+        ls -a
+        
+        git status
+        
+        cp -rf ../this/* ./
+        
+        ls -a
+        git status
+        
         cd AdventOfCode       
         
         git config user.email "you@example.com"
