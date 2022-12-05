@@ -13,7 +13,7 @@ jobs:
         mkdir tmp
         cd tmp
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
-        cp ../* .
+        cp -rf ../* .
         git add *
         git commit -m 'Changes pushed from remote repo'
         git push
