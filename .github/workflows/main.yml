@@ -32,7 +32,7 @@ jobs:
         
         git status
         
-        git config --unset-all http.https://github.com/.extraheader
+        git config --unset-all
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
         
