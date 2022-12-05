@@ -30,7 +30,10 @@ jobs:
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
         
-        git add src/lib/*
+        git add *
+        git rm -r src/aoc2015/*
+        git rm -r src/aoc2021/*
+        
         git commit -m 'Changes pushed from remote repo'
         git push
         
