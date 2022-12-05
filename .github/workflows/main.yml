@@ -23,9 +23,7 @@ jobs:
         git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
         
         ls -a
-        
-        git status
-        
+                
         cp -rf ../this/AdventOfCode/* ./AoC-2022-DDJ/
                 
         ls -a
