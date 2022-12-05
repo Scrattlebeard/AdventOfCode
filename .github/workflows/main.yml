@@ -15,24 +15,18 @@ jobs:
         cd this
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
         
-        ls -a
-        
         mkdir ../that
         cd ../that
         
         git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
-        
-        ls -a
                 
         cp -rf ../this/AdventOfCode/* ./AoC-2022-DDJ/
-                
-        ls -a
                 
         cd AoC-2022-DDJ
         
         git status
         
-        git config --unset-all
+        git config --unset-all http.https://github.com
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
         
