@@ -10,10 +10,10 @@ jobs:
     steps:
     - name: foo
       run: |
-        mkdir tmp
-        cd tmp
+        mkdir ../tmp
+        cd ../tmp
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
-        cp -rf ../* .
+        cp -rf ../AdventOfCode/ .
         git add *
         git commit -m 'Changes pushed from remote repo'
         git push
