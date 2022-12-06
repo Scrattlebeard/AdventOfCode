@@ -31,8 +31,13 @@ jobs:
         git config user.name "Scrattlebeard"
         
         git add *
+        
+        git status
+        
         git rm -r src/aoc2015/*
         git rm -r src/aoc2021/*
+        
+        git status
         
         git commit -m 'Changes pushed from remote repo'
         git push
