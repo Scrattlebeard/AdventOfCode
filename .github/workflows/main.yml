@@ -24,8 +24,8 @@ jobs:
         
     - name: Copy changes
       run: |          
-        cp -rf ../this/AdventOfCode/* ./AoC-2022-DDJ/                
-        cd AoC-2022-DDJ        
+        cp -rf ./this/AdventOfCode/* ./that/AoC-2022-DDJ/                
+        cd that/AoC-2022-DDJ        
         git status
     
     - name: Git config
