@@ -8,37 +8,42 @@ jobs:
     name: Push changes to Unions AoC
     runs-on: ubuntu-latest
     steps:
-    - name: foo
+    - name: Check out source
       run: |
         
         mkdir this
         cd this
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
         
+    - name: Check out target
+      run: |
+      
         mkdir ../that
         cd ../that
-        
         git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
-                
-        cp -rf ../this/AdventOfCode/* ./AoC-2022-DDJ/
-                
-        cd AoC-2022-DDJ
         
+    - name: Copy changes
+      run: |          
+        cp -rf ../this/AdventOfCode/* ./AoC-2022-DDJ/                
+        cd AoC-2022-DDJ        
         git status
-        
+    
+    - name: Git config
+      run: |
         git config --unset-all http.https://github.com
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
-        
-        git add *
-        
-        git status
-        
+    
+    - name: Stage changes
+      run: |
+        git add *        
+        git status        
         git rm -r src/aoc2015/*
-        git rm -r src/aoc2021/*
-        
+        git rm -r src/aoc2021/*        
         git status
-        
+    
+    - name: Commit and push
+      run: |
         git commit -m 'Changes pushed from remote repo'
         git push
         
