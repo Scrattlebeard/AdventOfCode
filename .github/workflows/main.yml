@@ -46,5 +46,5 @@ jobs:
       run: |
         cd that/AoC-2022-DDJ
         git commit -m 'Changes pushed from remote repo'
-        git push https://token:${{ github.token }}@github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
+        git push https://token:${{ secrets.UNIONS_AOC_ACCESS_TOKEN }}@github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
         
