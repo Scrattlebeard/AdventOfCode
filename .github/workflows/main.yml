@@ -39,8 +39,8 @@ jobs:
         cd that/AoC-2022-DDJ
         git add *        
         git status        
-        git rm -r src/aoc2015/*
-        git rm -r src/aoc2021/*        
+        git restore --staged src/aoc2015/*
+        git restore --staged src/aoc2021/*        
         git status
     
     - name: Commit and push
