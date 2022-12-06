@@ -17,7 +17,6 @@ jobs:
         
     - name: Check out target
       run: |
-      
         mkdir that
         cd that
         git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
@@ -47,5 +46,5 @@ jobs:
       run: |
         cd that/AoC-2022-DDJ
         git commit -m 'Changes pushed from remote repo'
-        git push
+        git push https://token:${{ github.token }}@github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
         
