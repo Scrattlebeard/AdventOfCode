@@ -18,8 +18,8 @@ jobs:
     - name: Check out target
       run: |
       
-        mkdir ../that
-        cd ../that
+        mkdir that
+        cd that
         git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
         
     - name: Copy changes
@@ -30,12 +30,14 @@ jobs:
     
     - name: Git config
       run: |
+        cd that/AoC-2022-DDJ
         git config --unset-all http.https://github.com
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
     
     - name: Stage changes
       run: |
+        cd that/AoC-2022-DDJ
         git add *        
         git status        
         git rm -r src/aoc2015/*
@@ -44,6 +46,7 @@ jobs:
     
     - name: Commit and push
       run: |
+        cd that/AoC-2022-DDJ
         git commit -m 'Changes pushed from remote repo'
         git push
         
