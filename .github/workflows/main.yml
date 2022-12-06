@@ -30,8 +30,7 @@ jobs:
     
     - name: Git config
       run: |
-        cd that/AoC-2022-DDJ
-        git config --unset-all http.https://github.com
+        cd that/AoC-2022-DDJ        
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
     
