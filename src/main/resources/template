@@ -3,8 +3,11 @@ package aoc<year>.day<day>
 import lib.*
 
 suspend fun main() {
-    challenge<List<String>> {
+    setupChallenge().solveChallenge()
+}
 
+fun setupChallenge(): Challenge<List<String>> {
+    return setup {
         day(<day>)
         year(<year>)
 
@@ -12,13 +15,11 @@ suspend fun main() {
             it.readLines()
         }
 
-        solver {
-            println("Solving challenge 1...")
+        partOne {
             null
         }
 
-        solver {
-            println("Solving challenge 2...")
+        partTwo {
             null
         }
     }

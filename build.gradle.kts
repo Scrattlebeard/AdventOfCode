@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.9.20-RC2"
 }
 
 repositories {
@@ -7,20 +7,14 @@ repositories {
 }
 
 dependencies {
-    implementation("io.ktor:ktor-client-core:2.1.3")
-    implementation("io.ktor:ktor-client-cio:2.1.3")
+    implementation("io.ktor:ktor-client-core:2.2.4")
+    implementation("io.ktor:ktor-client-cio:2.2.4")
+    implementation(kotlin("reflect"))
+    testImplementation("io.kotest:kotest-runner-junit5-jvm:5.5.5")
 }
 
-tasks {
-    sourceSets {
-        main {
-            java.srcDirs("src")
-        }
-    }
-
-    wrapper {
-        gradleVersion = "7.5.1"
-    }
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
 }
 
 group = "ddj.adventofcode"
