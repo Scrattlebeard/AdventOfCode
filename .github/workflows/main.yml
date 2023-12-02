@@ -18,7 +18,7 @@ jobs:
       id: commit-message
       run: |
         cd this/AdventOfCode
-        echo "::set-output name=message::$(git log -1 --pretty=%B)"
+        echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
 
     - name: Check out target
       run: |
