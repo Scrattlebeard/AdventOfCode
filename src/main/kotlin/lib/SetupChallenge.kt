@@ -4,15 +4,15 @@ import java.io.File
 import java.util.*
 
 
-var day: Int? = null
-var year: Int? = 2022
+var day: Int? = 1
+var year: Int? = 2023
 
 suspend fun main() {
 
     day = day ?: Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-    year = year ?: 2022
+    year = year ?: 2023
 
-    val path = "src/aoc$year/day$day/"
+    val path = "src/main/kotlin/aoc$year/day$day/"
     File(path).mkdirs()
 
     InputDownloader.instance.createInputFile(day!!, year!!)

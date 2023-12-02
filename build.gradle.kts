@@ -2,6 +2,10 @@ plugins {
     kotlin("jvm") version "1.9.20-RC2"
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
 repositories {
     mavenCentral()
 }
@@ -18,4 +22,4 @@ tasks.withType<Test>().configureEach {
 }
 
 group = "ddj.adventofcode"
-version = "0.2.0"
+version = "0.3.0"

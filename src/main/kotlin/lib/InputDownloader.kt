@@ -24,7 +24,7 @@ class InputDownloader {
     suspend fun createDescriptionFile(day: Int, year: Int) = createFile(day, year, "description.html", downloadDescription(day, year))
 
     fun createFile(day: Int, year: Int, fileName: String, content: String) {
-        val f = File("src/aoc$year/day$day/$fileName")
+        val f = File("src/main/kotlin/aoc$year/day$day/$fileName")
         if(!f.isFile)
         {
             f.parentFile.mkdirs()
