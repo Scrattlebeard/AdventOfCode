@@ -2,7 +2,7 @@ on:
   push:
     branches:
     - main
-      
+
 jobs:
   push_to_unions_aoc:
     name: Push changes to Unions AoC
@@ -10,41 +10,47 @@ jobs:
     steps:
     - name: Check out source
       run: |
-        
         mkdir this
         cd this
         git clone https://github.com/Scrattlebeard/AdventOfCode.git
-        
+
+    - name: Get last commit message
+      id: commit-message
+      run: |
+        cd this/AdventOfCode
+        echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+
     - name: Check out target
       run: |
         mkdir that
         cd that
-        git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
-        
+        git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2023-DDJ.git
+
     - name: Copy changes
       run: |          
-        cp -rf ./this/AdventOfCode/* ./that/AoC-2022-DDJ/                
-        cd that/AoC-2022-DDJ        
+        cp -rf ./this/AdventOfCode/* ./that/AoC-2023-DDJ/                
+        cd that/AoC-2023-DDJ        
         git status
-    
+
     - name: Git config
       run: |
-        cd that/AoC-2022-DDJ        
+        cd that/AoC-2023-DDJ        
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
-    
+
     - name: Stage changes
       run: |
-        cd that/AoC-2022-DDJ
+        cd that/AoC-2023-DDJ
         git add *        
         git status        
-        git restore --staged src/aoc2015/*
-        git restore --staged src/aoc2021/*        
+        git restore --staged src/main/kotlin/aoc2015/*
+        git restore --staged src/main/kotlin/aoc2021/*
+        git restore --staged src/main/kotlin/aoc2022/*
+        git restore --staged src/test/kotlin/AoC2022Tests
         git status
-    
+
     - name: Commit and push
       run: |
-        cd that/AoC-2022-DDJ
-        git commit -m 'Changes pushed from remote repo'
-        git push https://token:${{ secrets.UNIONS_AOC_ACCESS_TOKEN }}@github.com/Advent-of-Code-Netcompany-Unions/AoC-2022-DDJ.git
-        
+        cd that/AoC-2023-DDJ
+        git commit -m "${{ steps.commit-message.outputs.message }}"
+        git push https://token:${{ secrets.UNIONS_AOC_ACCESS_TOKEN }}@github.com/Advent-of-Code-Netcompany-Unions/AoC-2023-DDJ.git
