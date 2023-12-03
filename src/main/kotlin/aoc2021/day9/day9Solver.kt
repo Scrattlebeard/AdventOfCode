@@ -16,7 +16,7 @@ fun setupChallenge(): Challenge<List<List<Int>>> {
 
         parser {
             it.readLines()
-                .get2DArray()
+                .get2DArrayOfColumns()
                 .map { it.map { it.digitToInt() } }
         }
 

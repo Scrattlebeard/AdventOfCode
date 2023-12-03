@@ -12,7 +12,7 @@ fun setupChallenge() : Challenge<List<List<Int>>> {
 
         parser {
             it.readLines()
-                .get2DArray()
+                .get2DArrayOfColumns()
                 .map { it.map { it.digitToInt() } }
         }
 
@@ -64,9 +64,9 @@ fun setupChallenge() : Challenge<List<List<Int>>> {
                     val up = it[i].take(j)
                     val down = it[i].drop(j + 1)
 
-                    var leftVisible = left.reversed().takeWhile { it < size }.size
+                    var leftVisible = left.asReversed().takeWhile { it < size }.size
                     var rightVisible = right.takeWhile { it < size }.size
-                    var upVisible = up.reversed().takeWhile { it < size }.size
+                    var upVisible = up.asReversed().takeWhile { it < size }.size
                     var downVisible = down.takeWhile { it < size }.size
 
                     if (leftVisible < left.size)

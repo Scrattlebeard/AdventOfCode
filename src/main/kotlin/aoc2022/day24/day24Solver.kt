@@ -24,7 +24,7 @@ fun setupChallenge(): Challenge<Array<Array<String>>> {
                 .dropLast(1)
                 .map { it.substring(1, it.length - 1) }
 
-                .get2DArray()
+                .get2DArrayOfColumns()
                 .map { it.map { it.toString() }.map { if (it == ".") "" else it }.toTypedArray() }.toTypedArray()
         }
 

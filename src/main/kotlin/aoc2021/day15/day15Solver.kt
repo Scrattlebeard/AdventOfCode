@@ -16,7 +16,7 @@ fun setupChallenge(): Challenge<Pair<List<List<Int>>, Pair<Int, Int>>> {
         input("input.txt")
 
         parser {
-            val square = it.readLines().get2DArray()
+            val square = it.readLines().get2DArrayOfColumns()
                 .map { it.map { it.digitToInt() } }
             square to (square.size - 1 to square.first().size - 1)
         }

@@ -16,7 +16,7 @@ fun setupChallenge(): Challenge<Array<Array<Char>>> {
 
         parser {
             it.readLines()
-                .get2DArray()
+                .get2DArrayOfColumns()
         }
 
         partOne {

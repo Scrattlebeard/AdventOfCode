@@ -24,7 +24,7 @@ fun setupChallenge(): Challenge<List<List<List<String>>>> {
             it.mapIndexed { index, rounds ->
                 val cubesPerRound = rounds.map { it.getCubes() }
                 val maxCubes =
-                    cubesPerRound.fold(baseCubeCount) { count, new -> count.mapValues { entry -> maxOf(entry.value, new[entry.key]!!)} }
+                    cubesPerRound.fold(baseCubeCount) { current, other -> current.mapValues { entry -> maxOf(entry.value, other[entry.key]!!)} }
                 if (maxCubes.all { limits[it.key]!! >= it.value }) index + 1 else 0
             }
                 .sum()
@@ -35,7 +35,7 @@ fun setupChallenge(): Challenge<List<List<List<String>>>> {
             it.map { rounds ->
                 val cubesPerRound = rounds.map { it.getCubes() }
                 val maxCubes =
-                    cubesPerRound.fold(baseCubeCount) { count, new -> count.mapValues { entry -> maxOf(entry.value, new[entry.key]!!)} }
+                    cubesPerRound.fold(baseCubeCount) { current, other -> current.mapValues { entry -> maxOf(entry.value, other[entry.key]!!)} }
                 maxCubes.values.fold(1L) { n, i -> n * i }
             }
                 .sum()

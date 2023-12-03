@@ -1,5 +1,6 @@
 package aoc2022.day19
 
+import kotlinx.coroutines.*
 import lib.*
 
 suspend fun main() {
@@ -20,19 +21,26 @@ fun setupChallenge(): Challenge<List<Factory>> {
         }
 
         partOne {
-            val quals = it.map { it.maximizeGeodes(24, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) * it.id }
+            val quals =
+                it.map { it.maximizeGeodes(24, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) * it.id }
             quals.sum()
                 .toString()
         }
 
         partTwo {
-            val first = it[0].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1))
-            println("Solved first blueprint with result $first")
-            val second = it[1].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1))
-            println("Solved second blueprint with result $second")
-            val third = it[2].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1))
-            println("Solved third blueprint with result $third")
-            (first * second * third).toString()
+            runBlocking {
+                val first =
+                    async { it[0].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) }
+                val second =
+                    async { it[1].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) }
+                val third =
+                    async { it[2].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) }
+
+                //println("Solved first blueprint with result ${first.await()}")
+                //println("Solved second blueprint with result ${second.await()}")
+                //println("Solved third blueprint with result ${third.await()}")
+                (first.await() * second.await() * third.await()).toString()
+            }
         }
     }
 }
@@ -98,20 +106,34 @@ class Factory(blueprint: String) {
             options.add(wait(resourcesAvailable, robots))
         }
 
-        var currentBest = maximizeGeodes(turnsRemaining - 1, options.first().first, options.first().second)
-        options.drop(1).forEach {
-            if(getUpperBound(it, turnsRemaining - 1) > currentBest)
-                currentBest = maxOf(currentBest, maximizeGeodes(turnsRemaining - 1, it.first, it.second))
-        }
+        var currentBest = 0
+        runBlocking {
+            val maxTask = async { maximizeGeodes(turnsRemaining - 1, options.first().first, options.first().second) }
+            val upperBoundTasks = options.drop(1)
+                .map { it to getUpperBound(it, turnsRemaining - 1) }
 
+            currentBest = maxTask.await()
+            upperBoundTasks
+                .forEach {
+                    if (it.second > currentBest)
+                        currentBest =
+                            maxOf(currentBest, maximizeGeodes(turnsRemaining - 1, it.first.first, it.first.second))
+                }
+        }
         return currentBest
     }
 
-    fun getUpperBound(option: Pair<Map<Resource, Int>, Map<Resource, Int>>, remainingTurns: Int) : Int {
+    fun getUpperBound(option: Pair<Map<Resource, Int>, Map<Resource, Int>>, remainingTurns: Int): Int {
         val fromCurrentBots = option.second[Resource.Geode]!! * remainingTurns
-        val oreBudget = option.first[Resource.Ore]!! + ((option.second[Resource.Ore]!! + remainingTurns - 1) * remainingTurns)
-        val obsidianBudget = option.first[Resource.Obsidian]!! + ((option.second[Resource.Obsidian]!! + remainingTurns - 1) * remainingTurns)
-        val numFutureBots = minOf(oreBudget / prices[Resource.Geode]!!.ore, obsidianBudget / prices[Resource.Geode]!!.obsidian, remainingTurns)
+        val oreBudget =
+            option.first[Resource.Ore]!! + ((option.second[Resource.Ore]!! + remainingTurns - 1) * remainingTurns)
+        val obsidianBudget =
+            option.first[Resource.Obsidian]!! + ((option.second[Resource.Obsidian]!! + remainingTurns - 1) * remainingTurns)
+        val numFutureBots = minOf(
+            oreBudget / prices[Resource.Geode]!!.ore,
+            obsidianBudget / prices[Resource.Geode]!!.obsidian,
+            remainingTurns
+        )
         val fromFutureBots = (remainingTurns - 1 downTo remainingTurns - numFutureBots).sum()
         return fromCurrentBots + fromFutureBots + option.first[Resource.Geode]!!
     }

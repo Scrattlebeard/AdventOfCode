@@ -15,7 +15,7 @@ fun setupChallenge(): Challenge<Pair<String, Array<Array<Char>>>> {
 
         parser {
             val inp = it.getStringsGroupedByEmptyLine()
-            inp[0][0] to inp[1].get2DArray().addBorderOf('.')
+            inp[0][0] to inp[1].get2DArrayOfColumns().addBorderOf('.')
         }
 
         partOne {

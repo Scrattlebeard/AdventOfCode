@@ -17,7 +17,7 @@ fun setupChallenge(): Challenge<Pair<Array<Array<Char>>, String>> {
 
         parser {
             val parts = it.getStringsGroupedByEmptyLine()
-            val map = parts[0].get2DArray(parts[0].size, parts[0].maxOf { it.length }, ' ')
+            val map = parts[0].get2DArrayOfColumns(parts[0].size, parts[0].maxOf { it.length }, ' ')
             map to parts[1].first()
         }
 
@@ -50,7 +50,7 @@ fun setupChallenge(): Challenge<Pair<Array<Array<Char>>, String>> {
                 mutableListOf<Triple<Pair<Int, Int>, Pair<Int, CardinalDirection>?, String>>(Triple(start, null, ""))
 
             while (todo.any()) {
-                var (current, connection, rotations) = todo.removeLast()
+                var (current, connection, rotations) = todo.removeLastOrNull()!!
 
                 var eyes = 1
                 if (connection != null)

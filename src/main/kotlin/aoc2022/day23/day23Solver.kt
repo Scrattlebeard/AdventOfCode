@@ -17,7 +17,7 @@ fun setupChallenge(): Challenge<Pair<List<Elf>, Array<Array<Char>>>> {
 
         parser {
             val map = it.readLines()
-                .get2DArray()
+                .get2DArrayOfColumns()
             val elves = mutableListOf<Elf>()
             map.forEachIndexed { i, chars ->
                 chars.forEachIndexed { j, c ->

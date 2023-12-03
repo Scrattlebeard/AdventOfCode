@@ -41,7 +41,7 @@ fun setupChallenge(): Challenge<Pair<List<String>, List<List<Int>>>> {
 }
 
 fun parseCrates(inp: List<String>): List<String> {
-    return inp.get2DArray()
+    return inp.get2DArrayOfColumns()
         .filter { it.last().isDigit() }
         .map { it.joinToString("").trim().reversed().drop(1) }
 }

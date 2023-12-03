@@ -12,7 +12,7 @@ fun setupChallenge(): Challenge<Array<Array<Char>>> {
         year(2021)
 
         parser {
-            it.readLines().get2DArray()
+            it.readLines().get2DArrayOfColumns()
         }
 
         partOne {
