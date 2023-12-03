@@ -46,7 +46,7 @@ jobs:
         git restore --staged src/main/kotlin/aoc2015/*
         git restore --staged src/main/kotlin/aoc2021/*
         git restore --staged src/main/kotlin/aoc2022/*
-        git restore --staged src/test/kotlin/AoC2022Tests
+        git restore --staged src/test/kotlin/AoC2022Tests.kt
         git status
 
     - name: Commit and push
