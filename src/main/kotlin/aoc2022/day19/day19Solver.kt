@@ -22,23 +22,24 @@ fun setupChallenge(): Challenge<List<Factory>> {
 
         partOne {
             val quals =
-                it.map { it.maximizeGeodes(24, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) * it.id }
+                it.map { it.maximizeGeodes(State(24, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)), 0) * it.id }
             quals.sum()
                 .toString()
         }
 
         partTwo {
+            val startState = State(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1))
             runBlocking {
                 val first =
-                    async { it[0].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) }
+                    async { it[0].maximizeGeodes(startState, 0) }
                 val second =
-                    async { it[1].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) }
+                    async { it[1].maximizeGeodes(startState, 0) }
                 val third =
-                    async { it[2].maximizeGeodes(32, emptyResourceMap, emptyResourceMap.plus(Resource.Ore to 1)) }
+                    async { it[2].maximizeGeodes(startState, 0) }
 
-                //println("Solved first blueprint with result ${first.await()}")
-                //println("Solved second blueprint with result ${second.await()}")
-                //println("Solved third blueprint with result ${third.await()}")
+                println("Solved first blueprint with result ${first.await()}")
+                println("Solved second blueprint with result ${second.await()}")
+                println("Solved third blueprint with result ${third.await()}")
                 (first.await() * second.await() * third.await()).toString()
             }
         }
@@ -46,6 +47,8 @@ fun setupChallenge(): Challenge<List<Factory>> {
 }
 
 val emptyResourceMap = Resource.values().associateWith { 0 }
+
+data class State(val turnsRemaining: Int, val resources: Map<Resource, Int>, val robots: Map<Resource, Int>)
 
 class Factory(blueprint: String) {
 
@@ -70,88 +73,81 @@ class Factory(blueprint: String) {
         limits = mapOf(
             Resource.Ore to prices.values.maxOf { it.ore },
             Resource.Clay to obsidianCost2.toInt(),
-            Resource.Obsidian to geodeCost2.toInt(),
-            Resource.Geode to Int.MAX_VALUE
+            Resource.Obsidian to geodeCost2.toInt()
         )
     }
 
-    fun maximizeGeodes(turnsRemaining: Int, resourcesAvailable: Map<Resource, Int>, robots: Map<Resource, Int>): Int {
-        if (turnsRemaining == 0)
+    fun maximizeGeodes(state: State, currentBest: Int): Int {
+        val (turnsRemaining, resourcesAvailable, robots) = state
+
+        if (turnsRemaining == 0) {
             return resourcesAvailable[Resource.Geode]!!
+        }
 
         //Always construct geode robots
         if (resourcesAvailable.canAfford(prices[Resource.Geode]!!)) {
-            val upd = buildRobot(Resource.Geode, resourcesAvailable, robots)
-            return maximizeGeodes(turnsRemaining - 1, upd.first, upd.second)
+            return maximizeGeodes(buildRobot(Resource.Geode, state), currentBest)
         }
 
-        val options = mutableListOf<Pair<Map<Resource, Int>, Map<Resource, Int>>>()
+        val options = mutableListOf<State>()
 
         //Building ore robots are only limited by the amount of ore we can spend per minute
         if (resourcesAvailable.canAfford(prices[Resource.Ore]!!) && robots[Resource.Ore]!! < limits[Resource.Ore]!!) {
-            options.add(buildRobot(Resource.Ore, resourcesAvailable, robots))
+            options.add(buildRobot(Resource.Ore, state))
         }
 
-        val canBuyObsidian = robots[Resource.Obsidian]!! < limits[Resource.Obsidian]!!
-
         //Obsidian takes precedence over clay
-        if (resourcesAvailable.canAfford(prices[Resource.Obsidian]!!) && canBuyObsidian) {
-            options.add(buildRobot(Resource.Obsidian, resourcesAvailable, robots))
-        } else if (resourcesAvailable.canAfford(prices[Resource.Clay]!!) && robots[Resource.Clay]!! < limits[Resource.Clay]!! && canBuyObsidian) {
-            options.add(buildRobot(Resource.Clay, resourcesAvailable, robots))
+        if (robots[Resource.Obsidian]!! < limits[Resource.Obsidian]!!) {
+            if (resourcesAvailable.canAfford(prices[Resource.Obsidian]!!)) {
+                options.add(buildRobot(Resource.Obsidian, state))
+            } else if (resourcesAvailable.canAfford(prices[Resource.Clay]!!) && robots[Resource.Clay]!! < limits[Resource.Clay]!!) {
+                options.add(buildRobot(Resource.Clay, state))
+            }
         }
 
         //Only wait for a resource if we are potentially bottlenecked and have at least one robot collecting said ressource
         if (resourcesAvailable.any { it.key != Resource.Geode && robots[it.key]!! > 0 && it.value < limits[it.key]!! }) {
-            options.add(wait(resourcesAvailable, robots))
+            options.add(wait(state))
         }
 
-        var currentBest = 0
-        runBlocking {
-            val maxTask = async { maximizeGeodes(turnsRemaining - 1, options.first().first, options.first().second) }
-            val upperBoundTasks = options.drop(1)
-                .map { it to getUpperBound(it, turnsRemaining - 1) }
-
-            currentBest = maxTask.await()
-            upperBoundTasks
-                .forEach {
-                    if (it.second > currentBest)
-                        currentBest =
-                            maxOf(currentBest, maximizeGeodes(turnsRemaining - 1, it.first.first, it.first.second))
-                }
+        var newBest = currentBest
+        options.forEach {
+            if (getUpperBound(it) > newBest) {
+                newBest = maxOf(newBest, maximizeGeodes(it, newBest))
+            }
         }
-        return currentBest
+
+        return newBest
     }
 
-    fun getUpperBound(option: Pair<Map<Resource, Int>, Map<Resource, Int>>, remainingTurns: Int): Int {
-        val fromCurrentBots = option.second[Resource.Geode]!! * remainingTurns
+    fun getUpperBound(state: State): Int {
+        val (turnsRemaining, resourcesAvailable, robots) = state
+        val fromCurrentBots = robots[Resource.Geode]!! * turnsRemaining
         val oreBudget =
-            option.first[Resource.Ore]!! + ((option.second[Resource.Ore]!! + remainingTurns - 1) * remainingTurns)
+            resourcesAvailable[Resource.Ore]!! + ((robots[Resource.Ore]!! + turnsRemaining - 1) * turnsRemaining)
         val obsidianBudget =
-            option.first[Resource.Obsidian]!! + ((option.second[Resource.Obsidian]!! + remainingTurns - 1) * remainingTurns)
+            resourcesAvailable[Resource.Obsidian]!! + ((robots[Resource.Obsidian]!! + turnsRemaining - 1) * turnsRemaining)
         val numFutureBots = minOf(
             oreBudget / prices[Resource.Geode]!!.ore,
             obsidianBudget / prices[Resource.Geode]!!.obsidian,
-            remainingTurns
+            turnsRemaining
         )
-        val fromFutureBots = (remainingTurns - 1 downTo remainingTurns - numFutureBots).sum()
-        return fromCurrentBots + fromFutureBots + option.first[Resource.Geode]!!
+        val fromFutureBots = (turnsRemaining - 1 downTo turnsRemaining - numFutureBots).sum()
+        return fromCurrentBots + fromFutureBots + resourcesAvailable[Resource.Geode]!!
     }
 
-    fun wait(
-        resourcesAvailable: Map<Resource, Int>,
-        robots: Map<Resource, Int>
-    ): Pair<Map<Resource, Int>, Map<Resource, Int>> {
-        return resourcesAvailable.sumByKey(robots) to robots
+    fun wait(state: State): State {
+        val (turnsRemaining, resourcesAvailable, robots) = state
+        return State(turnsRemaining - 1, resourcesAvailable.sumByKey(robots), robots)
     }
 
-    fun buildRobot(
-        toBuild: Resource,
-        resourcesAvailable: Map<Resource, Int>,
-        robots: Map<Resource, Int>
-    ): Pair<Map<Resource, Int>, Map<Resource, Int>> {
-        return resourcesAvailable.pay(prices[toBuild]!!)
-            .sumByKey(robots) to robots.plus(toBuild to robots[toBuild]!! + 1)
+    fun buildRobot(toBuild: Resource, state: State): State {
+        val (turnsRemaining, resourcesAvailable, robots) = state
+        return State(
+            turnsRemaining - 1,
+            resourcesAvailable.pay(prices[toBuild]!!).sumByKey(robots),
+            robots.plus(toBuild to robots[toBuild]!! + 1)
+        )
     }
 }
 

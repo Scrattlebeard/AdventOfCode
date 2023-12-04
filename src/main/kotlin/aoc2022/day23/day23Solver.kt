@@ -58,7 +58,7 @@ fun setupChallenge(): Challenge<Pair<List<Elf>, Array<Array<Char>>>> {
             while (true) {
                 i++
                 elves.forEach { it.makePlan(map) }
-                if (elves.none { it.plan != null })
+                if (elves.all { it.plan == null })
                     break
 
                 elves.filter { it.plan != null }

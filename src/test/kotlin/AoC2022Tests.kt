@@ -171,7 +171,6 @@ class AoC2022Tests : FunSpec({
             .hasPartTwoResult(2052)
     }
 
-    //Slow, ~3 minutes
     test("December 19th") {
         day19()
             .withDefaultInput()
