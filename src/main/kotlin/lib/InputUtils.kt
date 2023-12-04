@@ -29,3 +29,11 @@ fun List<String>.readStringsAsDigits(): List<List<Int>> {
         }
     }
 }
+
+fun String.asListofInts(separator: String = " "): List<Int> {
+    return this.split(separator).filter { it.isNotEmpty() }.map { it.trim().toInt() }
+}
+
+fun String.asListofLongs(separator: String = " "): List<Long> {
+    return this.split(separator).filter { it.isNotEmpty() }.map { it.trim().toLong() }
+}

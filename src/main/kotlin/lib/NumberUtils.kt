@@ -14,6 +14,10 @@ fun Int.pow(p: Double): Double {
     return this.toDouble().pow(p)
 }
 
+fun Int.pow(p: Int): Double {
+    return this.toDouble().pow(p)
+}
+
 fun Int.log(b: Double): Double {
     return log(this.toDouble(), b)
 }
