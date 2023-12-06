@@ -17,7 +17,7 @@ fun setupChallenge(): Challenge<List<Scratchcard>> {
         parser {
             it.readLines()
                 .map { it.split(':')[1].trim() } //Remove "Card n  :" prefix
-                .map { it.split("|").map { it.asListofInts() } }
+                .map { it.split("|").map { it.asListOfInts() } }
                 .map { Scratchcard(it[0].toSet(), it[1].toSet()) }
         }
 
