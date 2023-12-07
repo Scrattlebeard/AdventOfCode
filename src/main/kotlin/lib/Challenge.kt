@@ -40,9 +40,15 @@ class Challenge<T> {
     }
 
     suspend fun runSolver(solver: (suspend (T) -> String?), inp: String) {
+        var input: T
+        var elapsed = measureTimeMillis {
+            input = parseInput(inp)
+        }
+        println("Time spent parsing input: $elapsed ms")
+
         var res: String?
-        val elapsed = measureTimeMillis {
-            res = solver(parseInput(inp))
+        elapsed = measureTimeMillis {
+            res = solver(input)
         }
         if(res != null) {
             clipboard.setContents(StringSelection(res), null)

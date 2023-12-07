@@ -27,6 +27,14 @@ fun IntProgression.startAt(n: Int): IntProgression {
     return maxOf(this.first, n)..this.last
 }
 
+fun IntRange.startAt(n: Int): IntRange {
+    return maxOf(this.first, n)..this.last
+}
+
+fun LongRange.startAt(n: Long): LongRange {
+    return maxOf(this.first, n)..this.last
+}
+
 fun IntProgression.stopAt(n: Int): IntProgression {
     return this.first..minOf(this.last, n)
 }
@@ -45,6 +53,16 @@ infix fun LongProgression.intersect(other: LongProgression): LongProgression {
     return listOf(this, other, opt1, opt2).minByOrNull { it.size() }!!
 }
 
+infix fun LongRange.intersect(other: LongRange): LongRange {
+    val opt1 = other.first..this.last
+    val opt2 = this.first..other.last
+    return listOf(this, other, opt1, opt2).minByOrNull { it.size() }!!
+}
+
 operator fun LongProgression.minus(other: LongProgression): List<LongProgression> {
+    return listOf(this.first..other.first, other.last..this.last).filter { !it.isEmpty() }
+}
+
+operator fun LongRange.minus(other: LongProgression): List<LongRange> {
     return listOf(this.first..other.first, other.last..this.last).filter { !it.isEmpty() }
 }
