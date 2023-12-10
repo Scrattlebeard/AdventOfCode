@@ -8,6 +8,7 @@ import aoc2023.day6.setupChallenge as day6
 import aoc2023.day7.setupChallenge as day7
 import aoc2023.day8.setupChallenge as day8
 import aoc2023.day9.setupChallenge as day9
+import aoc2023.day10.setupChallenge as day10
 //endregion
 
 import io.kotest.core.spec.style.FunSpec
@@ -91,5 +92,12 @@ class AoC2023Tests: FunSpec({
             .withDefaultInput()
             .hasPartOneResult(2075724761)
             .hasPartTwoResult(1072)
+    }
+
+    test("December 10th")
+    {
+        day10()
+            .withDefaultInput()
+            .hasPartOneResult(7102)
     }
 })

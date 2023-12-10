@@ -8,8 +8,8 @@ fun getNeighbourCoords(i: Int, j: Int, diagonals: Boolean = false): List<Pair<In
     return neighbours
 }
 
-fun Pair<Int, Int>.getNeighbours(): List<Pair<Int, Int>> {
-    return getNeighbourCoords(this.first, this.second)
+fun Pair<Int, Int>.getNeighbours(diagonals: Boolean = false): List<Pair<Int, Int>> {
+    return getNeighbourCoords(this.first, this.second, diagonals)
 }
 
 fun <T> Array<Array<T>>.getNeighbours(i: Int, j: Int, diagonals: Boolean = false): List<Pair<Pair<Int, Int>, T>> {
@@ -111,6 +111,8 @@ enum class CardinalDirection(val value: Int) {
 
     fun turn(change: RelativeDirection): CardinalDirection {
         return when (change) {
+            RelativeDirection.Up -> this
+            RelativeDirection.Down -> this.opposite()
             RelativeDirection.Left -> CardinalDirection.values().first { it.value == (this.value - 1).wrapAt(4) }
             RelativeDirection.Right -> CardinalDirection.values().first { it.value == (this.value + 1) % 4 }
         }
@@ -127,8 +129,38 @@ enum class CardinalDirection(val value: Int) {
 }
 
 enum class RelativeDirection(val char: Char) {
+    Up('U'),
+    Down('D'),
     Left('L'),
     Right('R')
+}
+fun relativeDirectionTo(orientation: CardinalDirection, target: CardinalDirection): RelativeDirection {
+    return when(orientation) {
+        CardinalDirection.North -> when(target) {
+            CardinalDirection.North -> RelativeDirection.Up
+            CardinalDirection.South -> RelativeDirection.Down
+            CardinalDirection.West -> RelativeDirection.Left
+            CardinalDirection.East -> RelativeDirection.Right
+        }
+        CardinalDirection.South -> when(target) {
+            CardinalDirection.North -> RelativeDirection.Down
+            CardinalDirection.South -> RelativeDirection.Up
+            CardinalDirection.West -> RelativeDirection.Right
+            CardinalDirection.East -> RelativeDirection.Left
+        }
+        CardinalDirection.West -> when(target) {
+            CardinalDirection.North -> RelativeDirection.Right
+            CardinalDirection.South -> RelativeDirection.Left
+            CardinalDirection.West -> RelativeDirection.Up
+            CardinalDirection.East -> RelativeDirection.Down
+        }
+        CardinalDirection.East -> when(target) {
+            CardinalDirection.North -> RelativeDirection.Left
+            CardinalDirection.South -> RelativeDirection.Right
+            CardinalDirection.West -> RelativeDirection.Down
+            CardinalDirection.East -> RelativeDirection.Up
+        }
+    }
 }
 
 fun <T> Pair<T, T>.x() = first
