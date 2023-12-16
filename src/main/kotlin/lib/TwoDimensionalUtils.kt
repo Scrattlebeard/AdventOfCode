@@ -21,6 +21,10 @@ fun <T> Array<Array<T>>.isValidCoord(i: Int, j: Int): Boolean {
     return i > -1 && j > -1 && i < this.size && j < this.first().size
 }
 
+fun <T> Array<Array<T>>.isValidCoord(pos: Pair<Int, Int>): Boolean {
+    return isValidCoord(pos.first, pos.second)
+}
+
 fun <T> Array<Array<T>>.tryMove(from: Pair<Int, Int>, direction: Pair<Int, Int>): Pair<T?, Pair<Int, Int>> {
     val (x, y) = from.first + direction.first to from.second + direction.second
     return if(this.isValidCoord(x, y)) {
