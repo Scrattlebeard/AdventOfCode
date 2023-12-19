@@ -39,6 +39,10 @@ fun IntProgression.stopAt(n: Int): IntProgression {
     return this.first..minOf(this.last, n)
 }
 
+fun IntRange.stopAt(n: Int): IntRange {
+    return this.first..minOf(this.last, n)
+}
+
 fun LongProgression.size(): Long {
     return if (this.isEmpty()) 0 else (this.last - this.first + 1) / this.step
 }

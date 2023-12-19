@@ -13,6 +13,11 @@ import aoc2023.day11.setupChallenge as day11
 import aoc2023.day12.setupChallenge as day12
 import aoc2023.day13.setupChallenge as day13
 import aoc2023.day14.setupChallenge as day14
+import aoc2023.day15.setupChallenge as day15
+import aoc2023.day16.setupChallenge as day16
+import aoc2023.day17.setupChallenge as day17
+import aoc2023.day18.setupChallenge as day18
+import aoc2023.day19.setupChallenge as day19
 //endregion
 
 import io.kotest.core.spec.style.FunSpec
@@ -136,5 +141,45 @@ class AoC2023Tests: FunSpec({
             .withDefaultInput()
             .hasPartOneResult(105461)
             .hasPartTwoResult(102829)
+    }
+
+    test("December 15th")
+    {
+        day15()
+            .withDefaultInput()
+            .hasPartOneResult(510273)
+            .hasPartTwoResult(212449)
+    }
+
+    test("December 16th")
+    {
+        day16()
+            .withDefaultInput()
+            .hasPartOneResult(7870)
+            .hasPartTwoResult(8143)
+    }
+
+    xtest("December 17th")
+    {
+        day17()
+            .withDefaultInput()
+            .hasPartOneResult(105461)
+            .hasPartTwoResult(102829)
+    }
+
+    xtest("December 18th")
+    {
+        day18()
+            .withDefaultInput()
+            .hasPartOneResult(46394)
+            .hasPartTwoResult(201398068194715)
+    }
+
+    test("December 19th")
+    {
+        day19()
+            .withDefaultInput()
+            .hasPartOneResult(401674)
+            .hasPartTwoResult(134906204068564)
     }
 })

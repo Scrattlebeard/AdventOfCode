@@ -1,5 +1,7 @@
 package lib
 
+import lib.twoDimensional.Point
+
 fun getNeighbourCoords(i: Int, j: Int, diagonals: Boolean = false): List<Pair<Int, Int>> {
     var neighbours = listOf(i to j + 1, i to j - 1, i + 1 to j, i - 1 to j)
     if (diagonals) {
@@ -89,12 +91,8 @@ operator fun Pair<IntProgression, IntProgression>.minus(other: Pair<IntProgressi
 }
 
 fun Pair<Int, Int>.adjacent(direction: CardinalDirection): Pair<Int, Int> {
-    return when (direction) {
-        CardinalDirection.East -> x() + 1 to y()
-        CardinalDirection.South -> x() to y() + 1
-        CardinalDirection.West -> x() - 1 to y()
-        CardinalDirection.North -> x() to y() - 1
-    }
+    val move = direction.movementFunction()
+    return this.x() + move.x() to this.y() + move.y()
 }
 
 fun Pair<Int, Int>.cardinalDirectionTo(other: Pair<Int, Int>): CardinalDirection {
@@ -128,6 +126,24 @@ enum class CardinalDirection(val value: Int) {
             West -> East
             North -> South
             South -> North
+        }
+    }
+
+    fun movementDelta(): Point {
+        return when (this) {
+            East -> Point(1, 0)
+            South -> Point(0, 1)
+            West -> Point(-1, 0)
+            North -> Point(0, -1)
+        }
+    }
+
+    fun movementFunction(): Pair<Int, Int> {
+        return when (this) {
+            East -> 1 to 0
+            South -> 0 to 1
+            West -> -1 to 0
+            North -> 0 to -1
         }
     }
 }
@@ -167,8 +183,8 @@ fun relativeDirectionTo(orientation: CardinalDirection, target: CardinalDirectio
     }
 }
 
-fun <T> Pair<T, T>.x() = first
-fun <T> Pair<T, T>.y() = second
+inline fun <T> Pair<T, T>.x() = first
+inline fun <T> Pair<T, T>.y() = second
 
 fun Pair<Int, Int>.wrapAt(limits: Pair<Int, Int>): Pair<Int, Int> {
     val x = this.x().wrapAt(limits.x())
