@@ -17,7 +17,7 @@ class Graph<T>(val nodeFunction: () -> Set<T>, val edgeFunction: (T) -> Set<Pair
         return getConnectionsWithCostFrom(node).map { it.first }.toSet()
     }
 
-    fun getConnectionsWithCostFrom(node: T): Set<Pair<T, Long>> {
+    override fun getConnectionsWithCostFrom(node: T): Set<Pair<T, Long>> {
         return edgeFunction(node)
     }
 

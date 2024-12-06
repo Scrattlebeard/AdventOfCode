@@ -14,6 +14,10 @@ class UnitValueGraph<T>(val nodeFunction: () -> Set<T>, val edgeFunction: (T) ->
         return edgeFunction(node)
     }
 
+    override fun getConnectionsWithCostFrom(node: T): Set<Pair<T, Long>> {
+        return getConnectionsFrom(node).map { it to 1L }.toSet()
+    }
+
     override fun shortestDistanceFromTo(
         node: T,
         predicate: (T) -> Boolean,

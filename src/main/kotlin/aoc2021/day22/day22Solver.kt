@@ -1,6 +1,7 @@
 package aoc2021.day22
 
 import lib.*
+import lib.threeDimensional.*
 
 suspend fun main() {
     setupChallenge().solveChallenge()

@@ -19,12 +19,13 @@ fun setupChallenge(): Challenge<List<String>> {
         }
 
         partOne {
-            (it[0].asListOfLongs() zip it[1].asListOfLongs())
+            val winningStrats= (it[0].asListOfLongs() zip it[1].asListOfLongs())
                 .map { BoatRace(it.first, it.second) }
                 .map {
                     it.countWinningStrats()
                 }
-                .fold(1) { a, b -> a * b }
+
+                winningStrats.fold(1) { a, b -> a * b }
                 .toString()
         }
 

@@ -5,12 +5,12 @@ import java.util.*
 
 
 var day: Int? = null
-var year: Int? = 2023
+var year: Int? = 2024
 
 suspend fun main() {
 
     day = day ?: Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-    year = year ?: 2023
+    year = year ?: 2024
 
     val path = "src/main/kotlin/aoc$year/day$day/"
     File(path).mkdirs()

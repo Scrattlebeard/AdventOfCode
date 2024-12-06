@@ -19,4 +19,5 @@ interface IGraph<T> {
     fun shortestDistanceFromTo(node: T, predicate: (T) -> Boolean): Long?
     fun getNodes(): Set<T>
     fun getConnectionsFrom(node: T): Set<T>
+    fun getConnectionsWithCostFrom(node: T): Set<Pair<T, Long>>
 }

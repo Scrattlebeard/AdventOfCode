@@ -10,6 +10,14 @@ fun Int.wrapAt(limit: Int): Int {
     }
 }
 
+fun Long.wrapAt(limit: Int): Int {
+    return if (this > -1) {
+        (this % limit.toLong()).toInt()
+    } else {
+        (limit + (this % limit.toLong())).toInt()
+    }
+}
+
 fun Int.pow(p: Double): Double {
     return this.toDouble().pow(p)
 }

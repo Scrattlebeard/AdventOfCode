@@ -1,7 +1,6 @@
-package lib
+package lib.threeDimensional
 
-import kotlin.math.pow
-import kotlin.math.sqrt
+import lib.*
 
 class Cube(val first: IntProgression, val second: IntProgression, val third: IntProgression) {
 
@@ -59,11 +58,11 @@ class Cube(val first: IntProgression, val second: IntProgression, val third: Int
         return res
     }
 
-    fun getPoints(): Set<Triple<Int, Int, Int>> {
+    fun getPoints(): Set<Point> {
         return this.first.flatMap { x ->
             this.second.flatMap { y ->
                 this.third.map { z ->
-                    Triple(x, y, z)
+                    Point(x, y, z)
                 }
             }
         }.toSet()
@@ -113,19 +112,4 @@ class Cube(val first: IntProgression, val second: IntProgression, val third: Int
         result = 31 * result + third.hashCode()
         return result
     }
-}
-
-fun Triple<Int, Int, Int>.distanceTo(other: Triple<Int, Int, Int>): Double {
-
-    return sqrt((this.first.toDouble() - other.first).pow(2) + (this.second.toDouble() - other.second).pow(2) + (this.third.toDouble() - other.third).pow(2))
-}
-
-fun Triple<Int, Int, Int>.getNeighbours(): Set<Triple<Int, Int, Int>> {
-    return setOf(
-        Triple(this.first - 1, this.second, this.third),
-        Triple(this.first + 1, this.second, this.third),
-        Triple(this.first, this.second - 1, this.third),
-        Triple(this.first, this.second + 1, this.third),
-        Triple(this.first, this.second, this.third - 1),
-        Triple(this.first, this.second, this.third + 1))
 }
