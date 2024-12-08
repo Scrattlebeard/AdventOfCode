@@ -2,6 +2,8 @@ on:
   push:
     branches:
     - main
+    paths:
+    - 'src/main/kotlin/aoc2024/**'
 
 jobs:
   push_to_unions_aoc:
@@ -24,17 +26,17 @@ jobs:
       run: |
         mkdir that
         cd that
-        git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2023-DDJ.git
+        git clone https://github.com/Advent-of-Code-Netcompany-Unions/AoC-2024-DDJ.git
 
     - name: Copy changes
       run: |          
-        cp -rf ./this/AdventOfCode/* ./that/AoC-2023-DDJ/                
-        cd that/AoC-2023-DDJ        
+        cp -rf ./this/AdventOfCode/* ./that/AoC-2024-DDJ/                
+        cd that/AoC-2024-DDJ        
         git status
 
     - name: Git config
       run: |
-        cd that/AoC-2023-DDJ        
+        cd that/AoC-2024-DDJ        
         git config user.email "you@example.com"
         git config user.name "Scrattlebeard"
 
@@ -46,11 +48,13 @@ jobs:
         git restore --staged src/main/kotlin/aoc2015/*
         git restore --staged src/main/kotlin/aoc2021/*
         git restore --staged src/main/kotlin/aoc2022/*
+        git restore --staged src/main/kotlin/aoc2023/*
         git restore --staged src/test/kotlin/AoC2022Tests.kt
+        git restore --staged src/test/kotlin/AoC2023Tests.kt
         git status
 
     - name: Commit and push
       run: |
-        cd that/AoC-2023-DDJ
+        cd that/AoC-2024-DDJ
         git commit -m "${{ steps.commit-message.outputs.message }}"
-        git push https://token:${{ secrets.UNIONS_AOC_ACCESS_TOKEN }}@github.com/Advent-of-Code-Netcompany-Unions/AoC-2023-DDJ.git
+        git push https://token:${{ secrets.UNIONS_AOC_ACCESS_TOKEN_2024 }}@github.com/Advent-of-Code-Netcompany-Unions/AoC-2024-DDJ.git
