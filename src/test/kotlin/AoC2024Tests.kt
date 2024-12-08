@@ -1,6 +1,7 @@
 //region Import challenges
 import aoc2024.day1.setupChallenge as day1
 import aoc2024.day2.setupChallenge as day2
+import aoc2024.day5.setupChallenge as day5
 import aoc2024.day6.setupChallenge as day6
 import aoc2024.day7.setupChallenge as day7
 import aoc2024.day8.setupChallenge as day8
@@ -12,9 +13,9 @@ class AoC2024Tests: FunSpec({
 
     test("Init")
     {
-        day6()
+        day8()
             .withDefaultInput()
-            .hasPartOneResult(4967)
+            .hasPartOneResult(327)
     }
 
     test("December 1st")
@@ -31,6 +32,14 @@ class AoC2024Tests: FunSpec({
             .withDefaultInput()
             .hasPartOneResult(663)
             .hasPartTwoResult(692)
+    }
+
+    test("December 5th")
+    {
+        day5()
+            .withDefaultInput()
+            .hasPartOneResult(5166)
+            .hasPartTwoResult(4679)
     }
 
     test("December 6th")
