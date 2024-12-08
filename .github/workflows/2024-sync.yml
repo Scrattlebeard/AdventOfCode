@@ -42,7 +42,7 @@ jobs:
 
     - name: Stage changes
       run: |
-        cd that/AoC-2023-DDJ
+        cd that/AoC-2024-DDJ
         git add *        
         git status        
         git restore --staged src/main/kotlin/aoc2015/*
