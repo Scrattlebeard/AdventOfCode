@@ -31,11 +31,13 @@ fun setupChallenge(): Challenge<Array<Array<Char>>> {
 }
 
 data class Antenna(val pos: Pair<Int, Int>, val freq: Char) {
+
     fun findAntinode(other: Antenna) : Pair<Int, Int> {
         return this.pos.findAntinode(other.pos)
     }
+
     fun findRepeatingAntinodes(other: Antenna, map: Array<Array<Char>>) : List<Pair<Int, Int>> {
-        val res = mutableListOf<Pair<Int, Int>>(this.pos, other.pos)
+        val res = mutableListOf(this.pos, other.pos)
         var a = other.pos
         var b = this.pos
         var c = b.findAntinode(a)
@@ -50,7 +52,7 @@ data class Antenna(val pos: Pair<Int, Int>, val freq: Char) {
 }
 
 fun Pair<Int, Int>.findAntinode(other: Pair<Int, Int>) : Pair<Int, Int> {
-    val relPos = this.first - other.first to this.second - other.second
+    val relPos = this - other
     return this.first + relPos.first to this.second + relPos.second
 }
 

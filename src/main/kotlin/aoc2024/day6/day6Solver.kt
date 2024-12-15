@@ -61,7 +61,7 @@ fun Array<Array<Char>>.findGuard(): Guard {
 fun Array<Array<Char>>.moveGuard(guard: Guard): Guard {
     if (this.isValidCoord(guard.pos)) {
         val next = guard.pos.adjacent(guard.direction)
-        return if (this.isValidCoord(next) && this[next.first][next.second] == '#') {
+        return if (this.isValidCoord(next) && this.get(next) == '#') {
             Guard(guard.pos, guard.direction.turn(RelativeDirection.Right))
         } else {
             Guard(next, guard.direction)

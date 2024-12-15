@@ -6,7 +6,7 @@ suspend fun main() {
     setupChallenge().solveChallenge()
 }
 
-fun setupChallenge(): Challenge<List<List<Int>>> {
+fun setupChallenge(): Challenge<Array<Array<Int>>> {
     return setup {
         day(10)
         year(2024)
@@ -14,7 +14,7 @@ fun setupChallenge(): Challenge<List<List<Int>>> {
         //input("example.txt")
 
         parser {
-            it.readLines().get2DArrayOfColumns().map { it.map { it.digitToInt() } }
+            it.readLines().get2DArrayOfColumns().map { it.map { it.digitToInt() }.toTypedArray() }.toTypedArray()
         }
 
         partOne {
@@ -35,22 +35,22 @@ fun setupChallenge(): Challenge<List<List<Int>>> {
     }
 }
 
-fun List<List<Int>>.reachableTopsFrom(pos: Pair<Int, Int>): Set<Pair<Int, Int>> {
+fun Array<Array<Int>>.reachableTopsFrom(pos: Pair<Int, Int>): Set<Pair<Int, Int>> {
     val currentHeight = this[pos.x()][pos.y()]
     if (currentHeight == 9) {
         return setOf(pos)
     }
 
-    val options = this.getNeighboursWhere(pos.x(), pos.y()) { it == currentHeight + 1 }
+    val options = this.getNeighboursWhere(pos) { it == currentHeight + 1 }
     return options.fold(setOf()) { acc, coord -> acc union this.reachableTopsFrom(coord.first) }
 }
 
-fun List<List<Int>>.pathsToTopFrom(pos: Pair<Int, Int>): Int {
-    val currentHeight = this[pos.x()][pos.y()]
+fun Array<Array<Int>>.pathsToTopFrom(pos: Pair<Int, Int>): Int {
+    val currentHeight = this.get(pos)
     if(currentHeight == 9) {
         return 1
     }
 
-    val options = this.getNeighboursWhere(pos.x(), pos.y()) { it == currentHeight + 1 }
+    val options = this.getNeighboursWhere(pos) { it == currentHeight + 1 }
     return options.sumOf { this.pathsToTopFrom(it.first) }
 }

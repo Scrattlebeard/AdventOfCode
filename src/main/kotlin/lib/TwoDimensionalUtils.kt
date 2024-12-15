@@ -19,8 +19,8 @@ fun <T> Array<Array<T>>.getNeighbours(i: Int, j: Int, diagonals: Boolean = false
     return neighbours.filter { this.isValidCoord(it.first, it.second) }.map { it to this[it.first][it.second] }
 }
 
-fun <T> Array<Array<T>>.getNeighboursWhere(i: Int, j: Int, criteria: (T) -> Boolean, diagonals: Boolean = false): List<Pair<Pair<Int, Int>, T>> {
-    return getNeighbours(i, j, diagonals).filter { criteria(it.second) }
+fun <T> Array<Array<T>>.getNeighboursWhere(pos: Pair<Int, Int>, diagonals: Boolean = false, criteria: (T) -> Boolean): List<Pair<Pair<Int, Int>, T>> {
+    return getNeighbours(pos.first, pos.second, diagonals).filter { criteria(it.second) }
 }
 
 fun <T> Array<Array<T>>.isValidCoord(i: Int, j: Int): Boolean {
@@ -86,10 +86,6 @@ fun <T> List<List<T>>.getNeighbours(i: Int, j: Int): List<Pair<Pair<Int, Int>, T
     val neighbours =
         listOf(i to j + 1, i to j - 1, i + 1 to j, i - 1 to j).filter { this.isValidCoord(it.first, it.second) }
     return neighbours.map { it to this[it.first][it.second] }
-}
-
-fun <T> List<List<T>>.getNeighboursWhere(i: Int, j: Int, criteria: (T) -> Boolean): List<Pair<Pair<Int, Int>, T>> {
-    return getNeighbours(i, j).filter { criteria(it.second) }
 }
 
 fun <T> Collection<Collection<T>>.isValidCoord(i: Int, j: Int): Boolean {
