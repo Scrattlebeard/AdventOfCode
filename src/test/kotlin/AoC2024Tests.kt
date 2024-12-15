@@ -2,6 +2,7 @@
 import aoc2024.day1.setupChallenge as day1
 import aoc2024.day2.setupChallenge as day2
 import aoc2024.day3.setupChallenge as day3
+import aoc2024.day4.setupChallenge as day4
 import aoc2024.day5.setupChallenge as day5
 import aoc2024.day6.setupChallenge as day6
 import aoc2024.day7.setupChallenge as day7
@@ -48,6 +49,14 @@ class AoC2024Tests: FunSpec({
             .withDefaultInput()
             .hasPartOneResult(159892596)
             .hasPartTwoResult(92626942)
+    }
+
+    test("December 4th")
+    {
+        day4()
+            .withDefaultInput()
+            .hasPartOneResult(2434)
+            .hasPartTwoResult(1835)
     }
 
     test("December 5th")

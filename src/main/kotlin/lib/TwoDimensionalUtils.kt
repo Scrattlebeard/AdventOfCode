@@ -31,6 +31,10 @@ fun <T> Array<Array<T>>.isValidCoord(pos: Pair<Int, Int>): Boolean {
     return isValidCoord(pos.first, pos.second)
 }
 
+fun <T> Array<Array<T>>.get(pos: Pair<Int, Int>): T {
+    return if(isValidCoord(pos)) this[pos.first][pos.second] else throw IllegalArgumentException("Invalid position $pos, dimensions of grid are ${this.size} * ${this.first().size}")
+}
+
 fun <T> Array<Array<T>>.tryMove(from: Pair<Int, Int>, direction: Pair<Int, Int>): Pair<T?, Pair<Int, Int>> {
     val (x, y) = from.first + direction.first to from.second + direction.second
     return if(this.isValidCoord(x, y)) {
@@ -54,6 +58,18 @@ fun <T> Array<Array<T>>.drawLine(from: Pair<Int, Int>, to: Pair<Int, Int>, value
     } else {
         throw Exception("Coordinates do not match: $from, $to")
     }
+}
+
+fun <T> Array<Array<T>>.findPositionsOf(target: T): Collection<Pair<Int, Int>> {
+    val res = mutableSetOf<Pair<Int, Int>>()
+    this.forEachIndexed { i, column ->
+        column.forEachIndexed { j, t ->
+            if (t == target) {
+                res.add(i to j)
+            }
+        }
+    }
+    return res
 }
 
 fun <T> Array<Array<T>>.print() {
@@ -88,10 +104,9 @@ operator fun Pair<IntProgression, IntProgression>.minus(other: Pair<IntProgressi
     val xs = this.first - other.first
     val ys = this.second - other.second
     val safeAreas = xs.flatMap { x -> ys.map { x to it } }
-    //val emptyArea = 0..-1 to 0..-1
 
-    val mappedYs = ys.map { this.first to it }//.map { safeAreas.fold(it) { acc, a -> (acc - a).firstOrNull() ?: emptyArea } }
-    val mappedXs = xs.map { it to this.second }//.map { safeAreas.fold(it) { acc, a -> (acc - a).firstOrNull() ?: emptyArea } }
+    val mappedYs = ys.map { this.first to it }
+    val mappedXs = xs.map { it to this.second }
         return safeAreas
             .plus(mappedXs)
             .plus(mappedYs)
@@ -203,6 +218,14 @@ fun relativeDirectionTo(orientation: CardinalDirection, target: CardinalDirectio
 
 fun <T> Pair<T, T>.x() = first
 fun <T> Pair<T, T>.y() = second
+
+operator fun Pair<Int, Int>.plus(other: Pair<Int, Int>): Pair<Int, Int> {
+    return this.first + other.first to this.second + other.second
+}
+
+operator fun Pair<Int, Int>.minus(other: Pair<Int, Int>): Pair<Int, Int> {
+    return this.first - other.first to this.second - other.second
+}
 
 fun Pair<Int, Int>.wrapAt(limits: Pair<Int, Int>): Pair<Int, Int> {
     val x = this.x().wrapAt(limits.x())
