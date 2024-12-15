@@ -40,7 +40,7 @@ fun setupChallenge(): Challenge<List<List<Pair<Int, Int>>>> {
             val xMax = x + 500 //Assume the "sand pyramid" extends equallish in each direction from (500, 0)
             val yMax = y + 2
             val cave = buildCave(xMax to yMax, it)
-            cave.draw(0 to yMax, xMax to yMax, "#")
+            cave.drawLine(0 to yMax, xMax to yMax, "#")
 
             var n = 0
             var done = false
@@ -64,7 +64,7 @@ fun getMaxVals(vals: List<List<Pair<Int, Int>>>): Pair<Int, Int> {
 
 fun buildCave(maxVals: Pair<Int, Int>, segments: List<List<Pair<Int, Int>>>): Array<Array<String>> {
     val cave = Array(maxVals.first + 1) { Array(maxVals.second + 1) { "." } }
-    segments.forEach { it.windowed(2).forEach { cave.draw(it[0], it[1], "#") } }
+    segments.forEach { it.windowed(2).forEach { cave.drawLine(it[0], it[1], "#") } }
     return cave
 }
 

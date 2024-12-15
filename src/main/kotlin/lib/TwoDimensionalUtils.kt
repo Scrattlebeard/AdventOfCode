@@ -19,6 +19,10 @@ fun <T> Array<Array<T>>.getNeighbours(i: Int, j: Int, diagonals: Boolean = false
     return neighbours.filter { this.isValidCoord(it.first, it.second) }.map { it to this[it.first][it.second] }
 }
 
+fun <T> Array<Array<T>>.getNeighboursWhere(i: Int, j: Int, criteria: (T) -> Boolean, diagonals: Boolean = false): List<Pair<Pair<Int, Int>, T>> {
+    return getNeighbours(i, j, diagonals).filter { criteria(it.second) }
+}
+
 fun <T> Array<Array<T>>.isValidCoord(i: Int, j: Int): Boolean {
     return i > -1 && j > -1 && i < this.size && j < this.first().size
 }
@@ -36,7 +40,7 @@ fun <T> Array<Array<T>>.tryMove(from: Pair<Int, Int>, direction: Pair<Int, Int>)
     }
 }
 
-fun <T> Array<Array<T>>.draw(from: Pair<Int, Int>, to: Pair<Int, Int>, value: T) {
+fun <T> Array<Array<T>>.drawLine(from: Pair<Int, Int>, to: Pair<Int, Int>, value: T) {
     if (from.first == to.first) {
         val coords = listOf(from.second, to.second).sorted()
         (coords[0]..coords[1]).forEach {
@@ -66,6 +70,10 @@ fun <T> List<List<T>>.getNeighbours(i: Int, j: Int): List<Pair<Pair<Int, Int>, T
     val neighbours =
         listOf(i to j + 1, i to j - 1, i + 1 to j, i - 1 to j).filter { this.isValidCoord(it.first, it.second) }
     return neighbours.map { it to this[it.first][it.second] }
+}
+
+fun <T> List<List<T>>.getNeighboursWhere(i: Int, j: Int, criteria: (T) -> Boolean): List<Pair<Pair<Int, Int>, T>> {
+    return getNeighbours(i, j).filter { criteria(it.second) }
 }
 
 fun <T> Collection<Collection<T>>.isValidCoord(i: Int, j: Int): Boolean {
@@ -148,6 +156,16 @@ enum class CardinalDirection(val value: Int) {
     }
 }
 
+fun Char.toCardinalDirection(): CardinalDirection {
+    return when (this) {
+        '^' -> CardinalDirection.North
+        'v' -> CardinalDirection.South
+        '<' -> CardinalDirection.West
+        '>' -> CardinalDirection.East
+        else -> throw IllegalArgumentException("$this")
+    }
+}
+
 enum class RelativeDirection(val char: Char) {
     Up('U'),
     Down('D'),
@@ -183,8 +201,8 @@ fun relativeDirectionTo(orientation: CardinalDirection, target: CardinalDirectio
     }
 }
 
-inline fun <T> Pair<T, T>.x() = first
-inline fun <T> Pair<T, T>.y() = second
+fun <T> Pair<T, T>.x() = first
+fun <T> Pair<T, T>.y() = second
 
 fun Pair<Int, Int>.wrapAt(limits: Pair<Int, Int>): Pair<Int, Int> {
     val x = this.x().wrapAt(limits.x())
