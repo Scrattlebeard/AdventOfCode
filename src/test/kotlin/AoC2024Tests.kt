@@ -47,6 +47,7 @@ class AoC2024Tests: FunSpec({
         day3()
             .withDefaultInput()
             .hasPartOneResult(159892596)
+            .hasPartTwoResult(92626942)
     }
 
     test("December 5th")
